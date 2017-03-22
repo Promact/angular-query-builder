@@ -1,0 +1,10 @@
+<div>
+    <h2>{{title}}</h2>
+    <div class="alert alert-info">
+        <span [innerHTML]="output"></span>
+    </div>
+    <query-builder #qb (onQueryUpdated)="queryUpdated($event)" 
+                       [fields]="fields" 
+                       [operators]="operators" 
+                       [conditions]="conditions"></query-builder>
+</div>
