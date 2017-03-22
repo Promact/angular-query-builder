@@ -19,7 +19,10 @@ export default class AppComponent {
   public conditions: Array<ListItem>;
 
   constructor() {
-
+    //create the vales that will populate the dropdowns of the query builder
+    //to get more control over the expression created you may want to move these queryUpdated
+    //to the query-builder- and query-builder-group and also change the ListItem type to your 
+    //custom types
     this.fields = [
       { name: 'Firstname', id: 'firstname' },
       { name: 'Lastname', id: 'lastname' },
@@ -39,8 +42,6 @@ export default class AppComponent {
       { name: '>', id: '>' },
       { name: '>=', id: '>=' }
     ];
-
-
   }
 
   public queryUpdated(filter: Filter): void {

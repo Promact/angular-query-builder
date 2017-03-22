@@ -1,4 +1,4 @@
-<div class="filter-group">
+<div *ngIf="isLoaded" class="filter-group">
     <div class="inline">
         <select [(ngModel)]="group.operator" (ngModelChange)="changeGroupOperator($event)" class="operator">
             <option [ngValue]="o" [value]="o" *ngFor="let o of operators">{{o.name}}</option>

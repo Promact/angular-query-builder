@@ -30,14 +30,17 @@ export default class QueryBuilderComponent {
         };
     }
 
+    //handle the onQueryUpdated event and pass it on up 
     public queryUpdated(group: Group): void {
         this.onQueryUpdated.emit(this.filter);
     }
 
+    //replace html entities
     private htmlEntities(str): string {
         return String(str).replace(/</g, '&lt;').replace(/>/g, '&gt;');
     }
 
+    //convert the object into a text query that can be used
     public computed(group: Group): string {
         if (!group) return '';
         let str = '';
@@ -80,11 +83,8 @@ export default class QueryBuilderComponent {
         return '(' + str + ')';
     }
 
-
+    //allow component creating the query builder to get the query text
     public getOutput(): string {
         return this.computed(this.filter.group);
     }
-
-
-
 }
