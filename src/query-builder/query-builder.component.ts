@@ -1,13 +1,12 @@
 import { Component, OnInit, ViewChild, Input, AfterViewInit, Output, EventEmitter } from '@angular/core';
-import QueryBuilderGroupComponent from './query-builder-group.component';
+import { QueryBuilderGroupComponent } from './query-builder-group.component';
 import { Filter, ListItem, Utils, Rule, Group } from "query-builder/query-builder.interfaces";
 
 @Component({
     selector: 'query-builder',
-    templateUrl: 'query-builder.html',
-    providers: []
+    templateUrl: 'query-builder.html' 
 })
-export default class QueryBuilderComponent {
+export class QueryBuilderComponent {
 
     @ViewChild('queryBuilderGroup') queryBuilderGroup: QueryBuilderGroupComponent;
 

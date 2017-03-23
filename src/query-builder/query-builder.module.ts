@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import QueryBuilderComponent from './query-builder.component';
-import QueryBuilderGroupComponent from './query-builder-group.component';
+import { QueryBuilderComponent } from './query-builder.component';
+import { QueryBuilderGroupComponent } from './query-builder-group.component';
 
 @NgModule({
   entryComponents: [
@@ -19,8 +19,8 @@ import QueryBuilderGroupComponent from './query-builder-group.component';
     QueryBuilderGroupComponent
   ],
   exports: [
-    QueryBuilderComponent  
+    QueryBuilderComponent
   ]
 })
-export default class QueryBuilderModule { }
+export class QueryBuilderModule { }
 

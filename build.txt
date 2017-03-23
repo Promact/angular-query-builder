@@ -1,0 +1,1 @@
+ ng b -op ..\jmaronge.github.io\angular-query-builder -e prod -bh angular-query-builder

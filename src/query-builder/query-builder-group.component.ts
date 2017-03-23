@@ -4,10 +4,9 @@ import { ListItem, Group, Rule, Filter, Utils } from 'query-builder/query-builde
 @Component({
     selector: 'query-builder-group',
     templateUrl: 'query-builder-group.html',
-    styleUrls: ['query-builder-group.css'],
-    providers: []
+    styleUrls: ['query-builder-group.css']
 })
-export default class QueryBuilderGroupComponent implements AfterViewInit {
+export class QueryBuilderGroupComponent implements AfterViewInit {
 
     @Output('onQueryUpdated') onQueryUpdated: EventEmitter<Group> = new EventEmitter<Group>();
     

@@ -1,11 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
-import { ListItem, Filter, IQueryBuilderComponent } from "query-builder/query-builder.interfaces";
-import QueryBuilderComponent from "query-builder/query-builder.component";
+import { ListItem, Filter } from "query-builder/query-builder.interfaces";
+import { QueryBuilderComponent } from "query-builder/query-builder.component";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  providers: []
+  providers: [QueryBuilderComponent]
 })
 export default class AppComponent {
 
