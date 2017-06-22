@@ -1,33 +1,37 @@
-<div *ngIf="isLoaded" class="filter-group">
-    <div class="inline">
-        <select [(ngModel)]="group.operator" (ngModelChange)="changeGroupOperator($event)" class="operator">
-            <option [ngValue]="o" [value]="o" *ngFor="let o of operators">{{o.name}}</option>
-        </select>
-        <button class="add-condition" (click)="addCondition()" class="k-button btn-success"> <span class="i-plus"></span>Add Condition</button>
-        <button class="add-group" (click)="addGroup()" class="k-button btn-success"> <span class="i-plus"></span>Add Group</button>
-        <button class="remove-group" (click)="removeGroup()" class="k-button btn-danger" *ngIf="parentGroup"> <span class="i-minus"></span>Remove Group</button>
-    </div>
-    <div class="group-conditions">
-        <div class="condition">
-            <div *ngFor="let rule of group.rules">
-                <div *ngIf="rule.hasOwnProperty('group')">
-                    <query-builder-group (onQueryUpdated)="queryUpdated($event)" [fields]="fields" [operators]="operators" [conditions]="conditions"
-                        [group]="rule.group" [parent-group]="group"></query-builder-group>
-                </div>
-                <div *ngIf="!rule.hasOwnProperty('group')">
-                    <div class="form-inline">
-                        <select class="rule-field" [(ngModel)]="rule.field" (ngModelChange)="changeRuleField(rule, $event)">
-                            <option [ngValue]="f" *ngFor="let f of fields">{{f.name}}</option>
-                        </select>
-                        <select class="rule-condition" [(ngModel)]="rule.condition" (ngModelChange)="changeRuleCondition(rule, $event)">
-                            <option [ngValue]="c" *ngFor="let c of conditions">{{c.name}}</option>
-                        </select>
-                        <input class="rule-data" type="text" [(ngModel)]="rule.data" (ngModelChange)="changeRuleData(rule, $event)" class="k-textbox"
-                        />
-                        <button class="remove-condition" (click)="removeCondition($index)" class="k-button btn-danger"> <span class="i-minus">Remove Condition</span> </button>
-                    </div>
-                </div>
-            </div>
+﻿<div *ngIf="isLoaded" class="panel panel-default">
+  <div class="panel-heading form-group">
+    <select [(ngModel)]="group.operator"
+            (ngModelChange)="changeGroupOperator($event)"
+            class="form-control">
+      <option *ngFor="let o of operators">{{o.name}}</option>
+    </select>
+    <button class="btn btn-success" (click)="addCondition()"> <span class="i-plus"></span>Add Condition</button>
+    <button class="btn btn-success" (click)="addGroup()"> <span class="i-plus"></span>Add Group</button>
+    <button class="btn btn-danger" (click)="removeGroup()" *ngIf="parentGroup"> <span class="i-minus"></span>Remove Group</button>
+  </div>
+  <div class="panel-body">
+    <div class="condition">
+      <div *ngFor="let rule of group.rules">
+        <div *ngIf="rule.hasOwnProperty('group')">
+          <query-builder-group (onQueryUpdated)="queryUpdated($event)"
+                               [fields]="fields" [operators]="operators" [conditions]="conditions"
+                               [group]="rule.group" [parent-group]="group"></query-builder-group>
         </div>
+        <div *ngIf="!rule.hasOwnProperty('group')">
+          <div class="form-group">
+            <select class="form-control" [(ngModel)]="rule.field"
+                    (ngModelChange)="changeRuleField(rule, $event)">
+              <option *ngFor="let f of fields">{{f.name}}</option>
+            </select>
+            <select class="form-control"
+                    [(ngModel)]="rule.condition" (ngModelChange)="changeRuleCondition(rule, $event)">
+              <option [ngValue]="c" *ngFor="let c of conditions">{{c.name}}</option>
+            </select>
+            <input class="form-control" type="text" [(ngModel)]="rule.data" (ngModelChange)="changeRuleData(rule, $event)" />
+            <button class="btn btn-danger" (click)="removeCondition($index)"> <span class="i-minus">Remove Condition</span> </button>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>

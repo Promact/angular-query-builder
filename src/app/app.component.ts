@@ -1,10 +1,11 @@
-import { Component, ViewChild } from '@angular/core';
+﻿import { Component, ViewChild } from '@angular/core';
 import { ListItem, Filter } from "query-builder/query-builder.interfaces";
 import { QueryBuilderComponent } from "query-builder/query-builder.component";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss'],
   providers: [QueryBuilderComponent]
 })
 export default class AppComponent {
@@ -46,7 +47,6 @@ export default class AppComponent {
 
   public queryUpdated(filter: Filter): void {
     console.log(filter);
-     this.output = this._queryBuilder.getOutput();
+    this.output = this._queryBuilder.getOutput();
   }
 }
-

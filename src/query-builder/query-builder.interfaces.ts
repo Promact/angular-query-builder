@@ -1,13 +1,13 @@
-//Misc interfaces and classes used in the Query Builder
+﻿//Misc interfaces and classes used in the Query Builder
 
-export interface IQueryBuilderComponent{
-    getOutput(): string;
+export interface IQueryBuilderComponent {
+  getOutput(): string;
 }
 
 export interface ListItem {
   id: any;
   name: string;
-} 
+}
 
 export interface Rule {
   condition?: ListItem;
