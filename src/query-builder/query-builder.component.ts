@@ -1,9 +1,9 @@
 ﻿import { Component, OnInit, ViewChild, Input, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { QueryBuilderGroupComponent } from './query-builder-group.component';
-import { Filter, ListItem, Utils, Rule, Group } from "lib/query-builder.interfaces";
+import { Filter, ListItem, Utils, Rule, Group } from "query-builder/query-builder.interfaces";
 
 @Component({
-  selector: 'ngx-query-builder',
+  selector: 'query-builder',
   templateUrl: 'query-builder.html'
 })
 export class QueryBuilderComponent {
@@ -12,9 +12,9 @@ export class QueryBuilderComponent {
 
   @Output('onQueryUpdated') onQueryUpdated: EventEmitter<Filter> = new EventEmitter<Filter>();
 
-  @Input('fields') fields: Array<ListItem>;
-  @Input('operators') operators: Array<ListItem>;
-  @Input('conditions') conditions: Array<ListItem>;
+  @Input() fields: Array<ListItem>;
+  @Input() operators: Array<ListItem>;
+  @Input() conditions: Array<ListItem>;
 
   public filter: Filter;
   public output: string;

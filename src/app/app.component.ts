@@ -8,7 +8,7 @@ import { QueryBuilderComponent } from "query-builder/query-builder.component";
   styleUrls: ['./app.component.scss'],
   providers: [QueryBuilderComponent]
 })
-export default class AppComponent {
+export class AppComponent {
 
   @ViewChild('qb') _queryBuilder: QueryBuilderComponent;
 
