@@ -36,6 +36,7 @@ export class QueryBuilderConditionComponent {
   onFieldChange() {
     this.selectedField = this.fields.find((f) => f.name == this.condition.field);
     this.condition.operator = null;
+    this.condition.value = null;
     this._emitChangeEvent();
   }
 
@@ -44,6 +45,14 @@ export class QueryBuilderConditionComponent {
   }
 
   onValueChange(event: Event) {
+    this._emitChangeEvent();
+  }
+
+  onEnumValueChange(event: Event) {
+    this._emitChangeEvent();
+  }
+
+  onBoolValueChange(event: Event) {
     this._emitChangeEvent();
   }
 

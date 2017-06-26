@@ -19,7 +19,8 @@
     <option *ngFor="let o of selectedField?.operators">{{o}}</option>
   </select>
 
-  <input #valueCtrl="ngModel"
+  <input *ngIf="selectedField?.type != 'enum' && selectedField?.type != 'boolean'"
+         #valueCtrl="ngModel"
          name="value"
          [type]="selectedField?.type || 'text'"
          class="form-control"
@@ -28,11 +29,39 @@
          (change)="onValueChange($event)"
          required />
 
+  <select *ngIf="selectedField?.type == 'enum'"
+          #enumValueCtrl="ngModel"
+          name="enumValue"
+          class="form-control"
+          [disabled]="fieldCtrl.invalid"
+          [class.has-error]="enumValueCtrl.touched && enumValueCtrl.invalid"
+          [(ngModel)]="condition.value"
+          (change)="onEnumValueChange($event)"
+          required>
+    <option *ngFor="let v of selectedField?.enum" [value]="v.value">{{v.text}}</option>
+  </select>
+  <select *ngIf="selectedField?.type == 'boolean'"
+          #boolValueCtrl="ngModel"
+          name="boolValue"
+          class="form-control"
+          [disabled]="fieldCtrl.invalid"
+          [class.has-error]="boolValueCtrl.touched && boolValueCtrl.invalid"
+          [(ngModel)]="condition.value"
+          (change)="onBoolValueChange($event)"
+          required>
+    <option value="true">True</option>
+    <option value="false">False</option>
+  </select>
+
   <button class="btn btn-success"
           type="submit"
           *ngIf="canAddCondition()"
           (click)="parentGroup?.addCondition()"
-          [disabled]="conditionForm.form.invalid">Add Condition</button>
+          [disabled]="conditionForm.form.invalid">
+    Add Condition
+  </button>
   <button class="btn btn-danger" type="button"
-          (click)="removeCondition()">Remove Condition</button>
+          (click)="removeCondition()">
+    Remove Condition
+  </button>
 </form>

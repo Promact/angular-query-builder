@@ -33,7 +33,22 @@ export class AppComponent {
       name: 'birthdate',
       operators: ['>', '<'],
       type: 'date'
-    }
+    },
+    {
+      name: 'user',
+      operators: ['=', '!='],
+      type: 'enum',
+      enum: [
+        { text: 'Customer', value: 0 },
+        { text: 'Dealer', value: 1 },
+        { text: 'Consumer', value: 2 }
+      ]
+    },
+    {
+      name: 'status',
+      operators: ['=', '!='],
+      type: 'boolean'
+    },
   ];
   operators: any = ['and', 'or'];
   myQuery: any;
