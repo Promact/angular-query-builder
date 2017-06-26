@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { QueryBuilderComponent } from './query-builder.component';
 import { QueryBuilderGroupComponent } from './query-builder-group.component';
+import { QueryBuilderConditionComponent } from './query-builder-condition.component';
 
 @NgModule({
   entryComponents: [
@@ -16,7 +17,8 @@ import { QueryBuilderGroupComponent } from './query-builder-group.component';
   declarations:
   [
     QueryBuilderComponent,
-    QueryBuilderGroupComponent
+    QueryBuilderGroupComponent,
+    QueryBuilderConditionComponent
   ],
   exports: [
     QueryBuilderComponent

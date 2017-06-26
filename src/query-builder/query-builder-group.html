@@ -1,37 +1,25 @@
-﻿<div *ngIf="isLoaded" class="panel panel-default">
-  <div class="panel-heading form-group">
-    <select [(ngModel)]="group.operator"
-            (ngModelChange)="changeGroupOperator($event)"
+﻿<div class="panel panel-default">
+  <div class="panel-heading form-inline form-group">
+    <select [(ngModel)]="logicalOperator"
+            (ngModelChange)="onChangeLogicalOperators($event)"
             class="form-control">
-      <option *ngFor="let o of operators">{{o.name}}</option>
+      <option *ngFor="let o of operators">{{o}}</option>
     </select>
-    <button class="btn btn-success" (click)="addCondition()"> <span class="i-plus"></span>Add Condition</button>
-    <button class="btn btn-success" (click)="addGroup()"> <span class="i-plus"></span>Add Group</button>
-    <button class="btn btn-danger" (click)="removeGroup()" *ngIf="parentGroup"> <span class="i-minus"></span>Remove Group</button>
+    <!--group?.-->
+    <button class="btn btn-success" *ngIf="!group?.conditions?.length" (click)="addCondition()">Add Condition</button>
+    <button class="btn btn-success" (click)="addGroup()">Add Group</button>
+    <button class="btn btn-danger" (click)="removeGroup()" *ngIf="parentGroup">Remove Group</button>
   </div>
   <div class="panel-body">
-    <div class="condition">
-      <div *ngFor="let rule of group.rules">
-        <div *ngIf="rule.hasOwnProperty('group')">
-          <query-builder-group (onQueryUpdated)="queryUpdated($event)"
-                               [fields]="fields" [operators]="operators" [conditions]="conditions"
-                               [group]="rule.group" [parent-group]="group"></query-builder-group>
-        </div>
-        <div *ngIf="!rule.hasOwnProperty('group')">
-          <div class="form-group">
-            <select class="form-control" [(ngModel)]="rule.field"
-                    (ngModelChange)="changeRuleField(rule, $event)">
-              <option *ngFor="let f of fields">{{f.name}}</option>
-            </select>
-            <select class="form-control"
-                    [(ngModel)]="rule.condition" (ngModelChange)="changeRuleCondition(rule, $event)">
-              <option [ngValue]="c" *ngFor="let c of conditions">{{c.name}}</option>
-            </select>
-            <input class="form-control" type="text" [(ngModel)]="rule.data" (ngModelChange)="changeRuleData(rule, $event)" />
-            <button class="btn btn-danger" (click)="removeCondition($index)"> <span class="i-minus">Remove Condition</span> </button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <query-builder-condition *ngFor="let c of group?.conditions"
+                             [condition]="c"
+                             [fields]="fields"
+                             [parentGroup]="_this"
+                             (conditionChange)="conditionQueryChange($event)"></query-builder-condition>
+    <query-builder-group *ngFor="let g of group?.groups"
+                          [fields]="fields"
+                          [operators]="operators"
+                          [group]="g"
+                          [parentGroup]="group"></query-builder-group>
   </div>
 </div>

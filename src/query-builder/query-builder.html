@@ -1,5 +1,4 @@
-﻿<query-builder-group (onQueryUpdated)="queryUpdated($event)"
-                     [fields]="fields"
+﻿<query-builder-group [fields]="fields"
                      [operators]="operators"
-                     [conditions]="conditions"
-                     [group]="filter.group"></query-builder-group>    
+                     [group]="query"
+                     (queryChange)="_queryChange($event)"></query-builder-group>

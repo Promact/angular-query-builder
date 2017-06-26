@@ -1,0 +1,38 @@
+﻿<form class="form-inline form-group" *ngIf="fields" #conditionForm="ngForm">
+  <select #fieldCtrl="ngModel"
+          name="field"
+          class="form-control"
+          [class.has-error]="fieldCtrl.touched && fieldCtrl.invalid"
+          [(ngModel)]="condition.field"
+          (change)="onFieldChange()"
+          required>
+    <option *ngFor="let f of fields">{{f.name}}</option>
+  </select>
+  <select #operatorCtrl="ngModel"
+          name="operator"
+          class="form-control"
+          [disabled]="fieldCtrl.invalid"
+          [class.has-error]="operatorCtrl.touched && operatorCtrl.invalid"
+          [(ngModel)]="condition.operator"
+          (change)="onOperatorChange($event)"
+          required>
+    <option *ngFor="let o of selectedField?.operators">{{o}}</option>
+  </select>
+
+  <input #valueCtrl="ngModel"
+         name="value"
+         [type]="selectedField?.type || 'text'"
+         class="form-control"
+         [class.has-error]="valueCtrl.touched && valueCtrl.invalid"
+         [(ngModel)]="condition.value"
+         (change)="onValueChange($event)"
+         required />
+
+  <button class="btn btn-success"
+          type="submit"
+          *ngIf="canAddCondition()"
+          (click)="parentGroup?.addCondition()"
+          [disabled]="conditionForm.form.invalid">Add Condition</button>
+  <button class="btn btn-danger" type="button"
+          (click)="removeCondition()">Remove Condition</button>
+</form>

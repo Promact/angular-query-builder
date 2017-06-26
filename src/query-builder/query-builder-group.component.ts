@@ -1,108 +1,91 @@
-﻿import { SimpleChange, Component, AfterViewInit, Input, EventEmitter, Output } from '@angular/core';
-import { ListItem, Group, Rule, Filter, Utils } from 'query-builder/query-builder.interfaces';
+﻿import {
+  Component,
+  Input,
+  EventEmitter,
+  Output
+} from '@angular/core';
+import { Utils } from 'query-builder/query-builder.interfaces';
 
 @Component({
   selector: 'query-builder-group',
-  templateUrl: 'query-builder-group.html',
-  styleUrls: ['query-builder-group.scss']
+  templateUrl: 'query-builder-group.html'
 })
-export class QueryBuilderGroupComponent implements AfterViewInit {
+export class QueryBuilderGroupComponent {
 
-  @Output('onQueryUpdated') onQueryUpdated: EventEmitter<Group> = new EventEmitter<Group>();
+  @Input() fields: any;
+  @Input() operators: any;
+  @Input() parentGroup: any;
 
-  @Input('parent-group') parentGroup: Group;
-  @Input('group') group: Group;
-  @Input('fields') fields: Array<ListItem>;
-  @Input('operators') operators: Array<ListItem>;
-  @Input('conditions') conditions: Array<ListItem>;
+  @Input()
+  get group() { return this._group; }
+  set group(value: any) {
+    if (value !== this._group) {
+      this._group = value;
+      if (value.logicalOperator) {
+        this.logicalOperator = value.logicalOperator;
+      }
+    }
+  }
+  private _group: any;
 
-  public isLoaded: boolean = false;
-  public output: any;
+  @Output() queryChange = new EventEmitter<any>();
+
+  _this: QueryBuilderGroupComponent;
 
   constructor() {
-    this.isLoaded = false;
+    this._this = this;
   }
 
-  public ngAfterViewInit(): void {
-    //for some reason it does not seem to work unless this is
-    //wrap in a setTimeout or some other mechanism to trigger change detection
-    setTimeout(() => {
-      this.isLoaded = true;;
-    })
+  logicalOperator: string = 'and';
+
+  onChangeLogicalOperators(event: any) {
+    this._emitChangeEvent();
+    this.group.logicalOperator = this.logicalOperator;
   }
 
-  ngOnChanges(changes: { [propertyName: string]: SimpleChange }): void {
-    console.log(changes);
-  }
-
-  //handle any events from children and send them on up
-  public queryUpdated(group: Group): void {
-    this.onQueryUpdated.emit(this.group);
-  }
-
-  //make sure the value has changed and emit the onQueryUpdated event
-  public changeGroupOperator(value: ListItem): void {
-    this.group.operator = this.operators.find((v: any) => v.name == value);
-    this.onQueryUpdated.emit(this.group);
-  }
-
-  //make sure the value has changed and emit the onQueryUpdated event
-  public changeRuleField(rule: Rule, value: ListItem): void {
-    rule.field = value;
-    this.onQueryUpdated.emit(this.group);
-  }
-
-  //make sure the value has changed and emit the onQueryUpdated event
-  public changeRuleCondition(rule: Rule, value: ListItem): void {
-    rule.condition = value;
-    this.onQueryUpdated.emit(this.group);
-  }
-
-  //make sure the value has changed and emit the onQueryUpdated event
-  public changeRuleData(rule: Rule, value: string): void {
-    rule.data = value;
-    this.onQueryUpdated.emit(this.group);
-  }
-
-  //add a new condition and emit the onQueryUpdated event
-  public addCondition(): void {
-    this.group.rules.push({
-      condition: { name: 'AND', id: 'and' },
-      field: { name: '', id: '' },
-      data: ''
+  addCondition() {
+    this.group.conditions.push({
+      id: Utils.generateUUID(),
+      field: '',
+      operator: '',
+      value: ''
     });
-    this.onQueryUpdated.emit(this.group);
+    this._emitChangeEvent();
   }
 
-  //remove a condition and emit the onQueryUpdated event
-  public removeCondition(index) {
-    this.group.rules.splice(index, 1);
-    this.onQueryUpdated.emit(this.group);
-  }
-
-  //add a new group and emit the onQueryUpdated event
-  public addGroup(): void {
-    console.log(this.group);
-    this.group.rules.push({
-      group: {
-        groupId: Utils.generateUUID(),
-        operator: { name: 'AND', id: 'and' },
-        rules: []
-      }
+  addGroup() {
+    this.group.groups.push({
+      id: Utils.generateUUID(),
+      logicalOperator: 'and',
+      conditions: [{
+        id: Utils.generateUUID(),
+        field: '',
+        operator: '',
+        value: ''
+      }],
+      groups: []
     });
-    console.log(this.group);
-    this.onQueryUpdated.emit(this.group);
+    this._emitChangeEvent();
   }
 
-  //remove a group and emit the onQueryUpdated event
-  public removeGroup(): void {
-    if (this.parentGroup === undefined) {
-      return;
+  removeGroup() {
+    if (this.parentGroup) {
+      let index: number = this.parentGroup.groups.findIndex((g: any) => {
+        return g.id === this.group.id;
+      });
+      this.parentGroup.groups.splice(index, 1);
+      this._emitChangeEvent();
     }
-    let index: number = this.parentGroup.rules.findIndex((r: Rule) => {
-      return r.hasOwnProperty('group') && r.group.groupId === this.group.groupId;
+  }
+
+  conditionQueryChange(event: any) {
+    let index: number = this.group.conditions.findIndex((c: any) => {
+      return c.id === event.id;
     });
-    this.parentGroup.rules.splice(index, 1);
-    this.onQueryUpdated.emit(this.group);
+    this.group.conditions[index] = event;
+  }
+
+  _emitChangeEvent(): void {
+    this.queryChange.emit(this.group);
   }
 }
