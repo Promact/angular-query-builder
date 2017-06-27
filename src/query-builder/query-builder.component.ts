@@ -9,7 +9,8 @@ import {
   Operator,
   Condition,
   Group,
-  Query
+  Query,
+  Utils
 } from './query-builder.interfaces';
 
 
@@ -39,8 +40,10 @@ export class QueryBuilderComponent {
   @Input() operators: Array<Operator>;
 
   @Output() queryChange = new EventEmitter<Query>();
+  @Output() queryString = new EventEmitter<string>();
 
   _queryChange(group: Query): void {
     this.queryChange.emit(group);
+    this.queryString.emit(Utils.computed(group));
   }
 }

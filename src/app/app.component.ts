@@ -2,7 +2,8 @@
 import {
   Field,
   Operator,
-  Query
+  Query,
+  Utils
 } from '../query-builder/query-builder.interfaces';
 
 @Component({
@@ -58,9 +59,13 @@ export class AppComponent {
 
   operators: Array<Operator> = ['and', 'or'];
   myQuery: any;
+  queryOutput: string;
 
   query: Query;
   queryChange(event: Query) {
     this.myQuery = event;
+  }
+  queryString(event: string) {
+    this.queryOutput = event;
   }
 }

@@ -46,8 +46,8 @@ export class QueryBuilderGroupComponent {
   logicalOperator: Operator = 'and';
 
   onChangeLogicalOperators(event: Operator) {
-    this._emitChangeEvent();
     this.group.logicalOperator = this.logicalOperator;
+    this._emitChangeEvent();
   }
 
   addCondition() {
@@ -85,11 +85,20 @@ export class QueryBuilderGroupComponent {
     }
   }
 
-  conditionQueryChange(event: Condition) {
+  conditionQueryChange(event: Condition): void {
     let index: number = this.group.conditions.findIndex((c: Condition) => {
       return c.id === event.id;
     });
     this.group.conditions[index] = event;
+    this._emitChangeEvent();
+  }
+
+  _queryChange(group: Group): void {
+    let i: number = this.group.groups.findIndex((g: Group) => {
+      return g.id === group.id;
+    });
+    //this.group.groups[i] = event;
+    this._emitChangeEvent();
   }
 
   _emitChangeEvent(): void {

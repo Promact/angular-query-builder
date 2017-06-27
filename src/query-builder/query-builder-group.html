@@ -5,7 +5,6 @@
             class="form-control">
       <option *ngFor="let o of operators">{{o}}</option>
     </select>
-    <!--group?.-->
     <button class="btn btn-success" *ngIf="!group?.conditions?.length" (click)="addCondition()">Add Condition</button>
     <button class="btn btn-success" (click)="addGroup()">Add Group</button>
     <button class="btn btn-danger" (click)="removeGroup()" *ngIf="parentGroup">Remove Group</button>
@@ -17,9 +16,10 @@
                              [parentGroup]="_this"
                              (conditionChange)="conditionQueryChange($event)"></query-builder-condition>
     <query-builder-group *ngFor="let g of group?.groups"
-                          [fields]="fields"
-                          [operators]="operators"
-                          [group]="g"
-                          [parentGroup]="group"></query-builder-group>
+                         [fields]="fields"
+                         [operators]="operators"
+                         [group]="g"
+                         [parentGroup]="group"
+                         (queryChange)="_queryChange($event)"></query-builder-group>
   </div>
 </div>

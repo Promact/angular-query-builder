@@ -4,7 +4,9 @@
     <query-builder [fields]="fields"
                    [operators]="operators"
                    [query]="query"
-                   (queryChange)="queryChange($event)"></query-builder>
+                   (queryChange)="queryChange($event)"
+                   (queryString)="queryString($event)"></query-builder>
   </div>
+  <pre>{{ queryOutput }}</pre>
   <pre>{{ myQuery | json }}</pre>
 </div>

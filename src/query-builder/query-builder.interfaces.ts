@@ -65,4 +65,39 @@ export class Utils {
     return (this.isNull(s) || s === '');
   }
 
+  static computed(group: Group): string {
+    if (!group) return '';
+    let str = '';
+    for (let i = 0; i < group.conditions.length; i++) {
+
+      let condition: Condition = group.conditions[i];
+
+      let value: string = Utils.isBlankString(condition.value) ?
+        '' :
+        condition.value;
+
+      if (!Utils.isBlankString(condition.value)) {
+        value = '\'' + value + '\'';
+      }
+
+      i > 0 && (str += ' ' + group.logicalOperator + ' ');
+      str += condition.field + ' ' +
+        String(condition.operator).replace(/</g, '&lt;').replace(/>/g, '&gt;') + ' ' + value;
+    }
+    for (let i = 0; i < group.groups.length; i++) {
+
+      let g: Group = group.groups[i];
+
+      (group.conditions.length > 0 || i > 0) && (str += ' ' + group.logicalOperator + ' ');
+
+      str += this.computed(g);
+    }
+
+    str = str.trim();
+    if (Utils.isBlankString(str)) {
+      return '';
+    }
+    return '(' + str + ')';
+  }
+
 }
