@@ -4,29 +4,38 @@ export interface IQueryBuilderComponent {
   getOutput(): string;
 }
 
+export type Type = 'text' | 'number' | 'date' | 'boolean' | 'enum';
+export type Operator = string;
+
+export interface Enum {
+  text: string;
+  value: any;
+}
+
 export interface Field {
   name: string;
-  operators: Array<string>;
+  operators: Array<Operator>;
   type: string;
+  enum?: Array<Enum>;
 }
 
 export interface Condition {
   id: string;
   field: string;
-  operator: string;
+  operator: Operator;
   value: string;
 }
 
 export interface Group {
   id: string;
-  logicalOperator: string;
+  logicalOperator: Operator;
   conditions: Array<Condition>;
   groups: Array<Group>;
 }
 
 export interface Query {
   id: string;
-  logicalOperator: string;
+  logicalOperator: Operator;
   conditions: Array<Condition>;
   groups: Array<Group>;
 }

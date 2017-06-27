@@ -1,6 +1,7 @@
 ﻿import { Component } from '@angular/core';
 import {
   Field,
+  Operator,
   Query
 } from '../query-builder/query-builder.interfaces';
 
@@ -54,7 +55,8 @@ export class AppComponent {
       type: 'boolean'
     },
   ];
-  operators: Array<string> = ['and', 'or'];
+
+  operators: Array<Operator> = ['and', 'or'];
   myQuery: any;
 
   query: Query;

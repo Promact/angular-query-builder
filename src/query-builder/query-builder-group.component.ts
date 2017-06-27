@@ -6,6 +6,7 @@
 } from '@angular/core';
 import {
   Field,
+  Operator,
   Condition,
   Group,
   Utils
@@ -19,7 +20,7 @@ import {
 export class QueryBuilderGroupComponent {
 
   @Input() fields: Array<Field>;
-  @Input() operators: Array<string>;
+  @Input() operators: Array<Operator>;
   @Input() parentGroup: any;
 
   @Input()
@@ -42,9 +43,9 @@ export class QueryBuilderGroupComponent {
     this._this = this;
   }
 
-  logicalOperator: string = 'and';
+  logicalOperator: Operator = 'and';
 
-  onChangeLogicalOperators(event: string) {
+  onChangeLogicalOperators(event: Operator) {
     this._emitChangeEvent();
     this.group.logicalOperator = this.logicalOperator;
   }
