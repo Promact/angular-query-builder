@@ -6,21 +6,19 @@ import { QueryBuilderGroupComponent } from './query-builder-group.component';
 import { QueryBuilderConditionComponent } from './query-builder-condition.component';
 
 @NgModule({
-  entryComponents: [
-    QueryBuilderComponent
-  ],
-  imports:
-  [
+  imports: [
     BrowserModule,
     FormsModule
   ],
-  declarations:
-  [
+  declarations: [
     QueryBuilderComponent,
     QueryBuilderGroupComponent,
     QueryBuilderConditionComponent
   ],
   exports: [
+    QueryBuilderComponent
+  ],
+  entryComponents: [
     QueryBuilderComponent
   ]
 })

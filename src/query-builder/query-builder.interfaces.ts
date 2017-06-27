@@ -4,22 +4,31 @@ export interface IQueryBuilderComponent {
   getOutput(): string;
 }
 
-export interface ListItem {
-  id: any;
+export interface Field {
   name: string;
+  operators: Array<string>;
+  type: string;
 }
 
-export interface Rule {
-  condition?: ListItem;
-  field?: ListItem;
-  data?: any;
-  group?: Group;
+export interface Condition {
+  id: string;
+  field: string;
+  operator: string;
+  value: string;
 }
 
 export interface Group {
-  groupId: string;
-  rules: Array<Rule>;
-  operator: ListItem;
+  id: string;
+  logicalOperator: string;
+  conditions: Array<Condition>;
+  groups: Array<Group>;
+}
+
+export interface Query {
+  id: string;
+  logicalOperator: string;
+  conditions: Array<Condition>;
+  groups: Array<Group>;
 }
 
 export interface Filter {

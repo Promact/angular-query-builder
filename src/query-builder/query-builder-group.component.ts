@@ -4,7 +4,13 @@
   EventEmitter,
   Output
 } from '@angular/core';
-import { Utils } from 'query-builder/query-builder.interfaces';
+import {
+  Field,
+  Condition,
+  Group,
+  Utils
+} from './query-builder.interfaces';
+
 
 @Component({
   selector: 'query-builder-group',
@@ -12,13 +18,13 @@ import { Utils } from 'query-builder/query-builder.interfaces';
 })
 export class QueryBuilderGroupComponent {
 
-  @Input() fields: any;
-  @Input() operators: any;
+  @Input() fields: Array<Field>;
+  @Input() operators: Array<string>;
   @Input() parentGroup: any;
 
   @Input()
-  get group() { return this._group; }
-  set group(value: any) {
+  get group(): Group { return this._group; }
+  set group(value: Group) {
     if (value !== this._group) {
       this._group = value;
       if (value.logicalOperator) {
@@ -26,9 +32,9 @@ export class QueryBuilderGroupComponent {
       }
     }
   }
-  private _group: any;
+  private _group: Group;
 
-  @Output() queryChange = new EventEmitter<any>();
+  @Output() queryChange = new EventEmitter<Group>();
 
   _this: QueryBuilderGroupComponent;
 
@@ -38,7 +44,7 @@ export class QueryBuilderGroupComponent {
 
   logicalOperator: string = 'and';
 
-  onChangeLogicalOperators(event: any) {
+  onChangeLogicalOperators(event: string) {
     this._emitChangeEvent();
     this.group.logicalOperator = this.logicalOperator;
   }
@@ -70,7 +76,7 @@ export class QueryBuilderGroupComponent {
 
   removeGroup() {
     if (this.parentGroup) {
-      let index: number = this.parentGroup.groups.findIndex((g: any) => {
+      let index: number = this.parentGroup.groups.findIndex((g: Group) => {
         return g.id === this.group.id;
       });
       this.parentGroup.groups.splice(index, 1);
@@ -78,8 +84,8 @@ export class QueryBuilderGroupComponent {
     }
   }
 
-  conditionQueryChange(event: any) {
-    let index: number = this.group.conditions.findIndex((c: any) => {
+  conditionQueryChange(event: Condition) {
+    let index: number = this.group.conditions.findIndex((c: Condition) => {
       return c.id === event.id;
     });
     this.group.conditions[index] = event;

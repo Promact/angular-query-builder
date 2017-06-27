@@ -1,4 +1,8 @@
 ﻿import { Component } from '@angular/core';
+import {
+  Field,
+  Query
+} from '../query-builder/query-builder.interfaces';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +12,7 @@
 export class AppComponent {
   title: string = 'Angular Query Builder!';
 
-  fields: Array<any> = [
+  fields: Array<Field> = [
     {
       name: 'first name',
       operators: ['=', '!=', '>', '<'],
@@ -50,11 +54,11 @@ export class AppComponent {
       type: 'boolean'
     },
   ];
-  operators: any = ['and', 'or'];
+  operators: Array<string> = ['and', 'or'];
   myQuery: any;
 
-  query: any;
-  queryChange(event: any) {
+  query: Query;
+  queryChange(event: Query) {
     this.myQuery = event;
   }
 }

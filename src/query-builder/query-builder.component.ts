@@ -4,6 +4,12 @@
   Output,
   EventEmitter
 } from '@angular/core';
+import {
+  Field,
+  Condition,
+  Group
+} from './query-builder.interfaces';
+
 
 @Component({
   selector: 'query-builder',

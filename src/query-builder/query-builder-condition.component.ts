@@ -4,6 +4,12 @@
   EventEmitter,
   Output
 } from '@angular/core';
+import { QueryBuilderGroupComponent } from './query-builder-group.component';
+import {
+  Field,
+  Condition,
+  Group
+} from './query-builder.interfaces';
 
 @Component({
   selector: 'query-builder-condition',
@@ -12,22 +18,22 @@
 })
 export class QueryBuilderConditionComponent {
 
-  selectedField: any;
+  selectedField: Field;
 
-  @Input() parentGroup: any;
+  @Input() parentGroup: QueryBuilderGroupComponent;
 
   @Input()
-  get condition() { return this._condition; }
-  set condition(value: any) {
+  get condition(): Condition { return this._condition; }
+  set condition(value: Condition) {
     if (value !== this._condition) {
       this._condition = value;
     }
   };
-  private _condition: any;
+  private _condition: Condition;
 
-  @Output() conditionChange = new EventEmitter<any>();
+  @Output() conditionChange = new EventEmitter<Condition>();
 
-  @Input() fields: Array<any>;
+  @Input() fields: Array<Field>;
 
   ngAfterContentInit() {
     this.selectedField = this.fields.find((f) => f.name == this.condition.field);
@@ -58,7 +64,7 @@ export class QueryBuilderConditionComponent {
 
   removeCondition() {
     if (this.parentGroup) {
-      let index: number = this.parentGroup.group.conditions.findIndex((c: any) => {
+      let index: number = this.parentGroup.group.conditions.findIndex((c: Condition) => {
         return c.id === this.condition.id;
       });
       this.parentGroup.group.conditions.splice(index, 1);
@@ -68,7 +74,7 @@ export class QueryBuilderConditionComponent {
 
   canAddCondition(): boolean {
     if (this.parentGroup) {
-      let index: number = this.parentGroup.group.conditions.findIndex((c: any) => {
+      let index: number = this.parentGroup.group.conditions.findIndex((c: Condition) => {
         return c.id === this.condition.id;
       });
       return this.parentGroup.group.conditions.length === index + 1;
